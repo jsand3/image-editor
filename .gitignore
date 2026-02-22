@@ -17,3 +17,7 @@ env/
 # IDE
 .vscode/
 .idea/
+
+# Node
+web/node_modules/
+web/package-lock.json

@@ -61,3 +61,43 @@ Both operations now accept an image URL in addition to a local file path:
 
 ### First successful run
 Background removal confirmed working end-to-end with a valid API key.
+
+---
+
+## 2026-02-21 — Web App Build
+
+### Prompt context
+User requested a browser-based web app (Node.js) wrapping the image editor with:
+- A modern tech-site design inspired by a screenshot showing a twilight/sunset landscape, mountain silhouettes, and an orange/copper robot
+- An SVG landscape and SVG robot (matching the screenshot aesthetic)
+- A fake-AI chat UI: looks like an AI assistant, uses interactive prompts to walk users through removing backgrounds or converting formats
+- Image input via file upload or URL
+- Chat animations (typing indicator, message slide-in, result fade-in)
+- Branding created using the `/marketing` knowledge-work-plugins skill (brand-voice framework)
+
+### Screenshot reference
+`Screenshot 2026-02-21 at 9.47.47 PM.png` — shows a SaaS hero page with:
+- Deep purple-to-warm-orange sunset sky gradient
+- Layered mountain silhouettes at bottom
+- Scattered white stars in the upper sky
+- An orange/copper boxy robot (right side, partially behind a floating card)
+- A glassmorphism floating UI card
+
+### Brand decision: CutBot
+Applied the brand-voice framework from the marketing plugin:
+- **Brand personality**: Friendly, efficient robot colleague. Handles image tasks instantly. Approachable but capable.
+- **Name**: CutBot — "cut" (background removal + format cutting) + "bot" (the chat robot interface and the SVG robot character). Simple, memorable, describes both the function and the UX.
+- **Tagline**: "Smart image editing. Just chat."
+- **Voice attributes**: Approachable, precise, playful — the bot talks in short friendly sentences, never technical jargon
+- **Color palette**: Deep space purple (#0d0124), mid purple (#3d1060), sunset orange (#e85d20), robot copper (#e87a2a)
+
+### Web app architecture
+- Node.js + Express server (`web/server.js`)
+- `multer` for file uploads (memory storage)
+- `sharp` for server-side format conversion
+- `node-fetch` + `form-data` to proxy Remove.bg API calls (keeps API key server-side)
+- Vanilla HTML/CSS/JS frontend — no framework
+- SVG landscape: full-screen fixed background with sky gradient, generated stars, 3 mountain layers
+- SVG robot: inline SVG, copper/orange, floating animation
+- Chat state machine: waiting → imageReceived → choosing → processing → done
+- Result images returned as blobs, displayed in chat with download button
