@@ -43,3 +43,21 @@ Remove.bg always returns PNG bytes. When the user requests WebP output, Pillow c
 
 ### Environment variables
 - `REMOVE_BG_API_KEY` — Remove.bg API key, loaded from `.env` via python-dotenv
+
+---
+
+## 2026-02-21 — URL Support & First Successful Test
+
+### URL input added
+Both operations now accept an image URL in addition to a local file path:
+- **Background removal**: URL passed directly to Remove.bg via `image_url` param — no download needed
+- **Format conversion**: image downloaded into memory via `requests`, then processed
+- Output saves to current working directory when source is a URL, named from the URL filename stem
+
+### Setup issues encountered
+- macOS Xcode Command Line Tools were broken (xcrun missing), blocking git and Python entirely. Fixed by reinstalling via `xcode-select --install`.
+- Dependencies (`requests`, `Pillow`, `python-dotenv`) were not pre-installed. Resolved with `pip3 install -r requirements.txt`.
+- Remove.bg API key was initially truncated/incorrect, returning a 403. Resolved by copying the full key directly from the Remove.bg dashboard.
+
+### First successful run
+Background removal confirmed working end-to-end with a valid API key.
